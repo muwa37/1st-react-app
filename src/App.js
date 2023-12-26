@@ -3,6 +3,8 @@ import React, { useState } from "react";
 // import ClassCounter from "./components/ClassCounter";
 import PostList from "./components/PostList";
 import "./styles/App.css";
+import CustomBtn from "./components/UI/button/CustomBtn";
+import CustomInput from "./components/UI/input/CustomInput";
 
 
 function App() {
@@ -15,6 +17,11 @@ function App() {
  
   return (
     <div className="App">
+      <form>
+        <CustomInput type='text' placeholder="post name" />
+        <CustomInput type='text' placeholder="post body" />
+        <CustomBtn> create </CustomBtn>
+      </form>
       <PostList posts={posts} title='Post List 1' />
     </div>
   );

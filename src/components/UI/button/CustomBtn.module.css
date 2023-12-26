@@ -1,0 +1,8 @@
+.CustomBtn {
+    padding: 5px 15px;
+    color: lightcoral;
+    font-size: 15px;
+    background: transparent;
+    border: 1px solid lightcoral;
+    cursor: pointer;
+}
