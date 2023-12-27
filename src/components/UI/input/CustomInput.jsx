@@ -1,7 +1,7 @@
 import React from "react";
 import classes from './CustomInput.module.css';
 
-const CustomInput = ({children, ...props}) => {
+const CustomInput = (props) => {
     return (
         <input className = {classes.CustomInput} {...props} />
     );

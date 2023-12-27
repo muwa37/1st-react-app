@@ -3,8 +3,7 @@ import React, { useState } from "react";
 // import ClassCounter from "./components/ClassCounter";
 import PostList from "./components/PostList";
 import "./styles/App.css";
-import CustomBtn from "./components/UI/button/CustomBtn";
-import CustomInput from "./components/UI/input/CustomInput";
+import PostForm from "./components/PostForm";
 
 
 function App() {
@@ -14,14 +13,14 @@ function App() {
     {id: 2, title: 'test 2', body: 'description'},
     {id: 3, title: 'test 3', body: 'description'},
   ])
+
+  const createPost = (newPost) => {
+    setPosts([...posts, newPost])
+  }
  
   return (
     <div className="App">
-      <form>
-        <CustomInput type='text' placeholder="post name" />
-        <CustomInput type='text' placeholder="post body" />
-        <CustomBtn> create </CustomBtn>
-      </form>
+      <PostForm create={createPost}/>
       <PostList posts={posts} title='Post List 1' />
     </div>
   );
