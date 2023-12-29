@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, {useMemo, useState } from "react";
 // import Counter from "./components/Counter";
 // import ClassCounter from "./components/ClassCounter";
 import PostList from "./components/PostList";
 import "./styles/App.css";
 import PostForm from "./components/PostForm";
-import CustomSelect from "./components/UI/select/CustomSelect";
-import CustomInput from "./components/UI/input/CustomInput";
+import PostFilter from "./components/PostFilter";
+import CustomModal from "./components/UI/modal/CustomModal";
+import CustomBtn from "./components/UI/button/CustomBtn";
 
 
 function App() {
@@ -16,64 +17,47 @@ function App() {
     {id: 3, title: 'test 3', body: 'description'},
   ])
 
-  const [selectedSort, setSelectedSort] = useState('')
+  const [filter, setFilter] = useState({sort: '', query: ''})
 
-  const [searchQuery, setSearchQuery] = useState('')
+  const [modal, setModal] = useState(false);
 
-  function getSoretedPosts() {
-    if(selectedSort) {
-      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]))
+  const sortedPosts = useMemo(() => {
+    if(filter.sort) {
+      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
     }
     return posts;
-  }
 
-  const sortedPosts = getSoretedPosts();
+  }, [filter.sort, posts])
+
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query))
+  }, [filter.query, sortedPosts]);
 
   const createPost = (newPost) => {
-    setPosts([...posts, newPost])
+    setPosts([...posts, newPost]);
+    setModal(false);
   }
 
   const removePost = (post) => {
     setPosts(posts.filter(p => p.id !== post.id))
   }
 
-  const sortPosts = (sort) => {
-    setSelectedSort(sort);
-  }
- 
   return (
     <div className="App">
-      <PostForm create={createPost}/>
+
+      <CustomBtn style={{marginTop: 30}} onClick={() => setModal(true)}>
+        create post
+      </CustomBtn>
+
+      <CustomModal visible={modal} setVIsible={setModal}>
+        <PostForm create={createPost}/>
+      </CustomModal>
 
       <hr style={{margin: '15px' }} />
 
-      <div>
+      <PostFilter filter={filter} setFilter={setFilter}/>
 
-        <CustomInput type='text' 
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          placeholder='search'
-        />
-
-        <CustomSelect 
-          value={selectedSort}
-          onChange={sortPosts}
-          defaultValue='sort'
-          options={[
-            {value: 'title', name: 'by titile'},
-            {value: 'body', name: 'by description'},
-          ]}
-        />
-      </div>
-
-      {posts.length 
-        ? 
-        <PostList remove={removePost} posts={sortedPosts} title='Post List 1' />
-        : 
-        <h1 style={{textAlign: 'center'}}>
-            no posts
-        </h1>
-      }
+      <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Post List 1' />
     </div>
   );
 }
