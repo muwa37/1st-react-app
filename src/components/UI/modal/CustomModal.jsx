@@ -9,10 +9,14 @@ const CustomModal = ({children, visible, setVIsible}) => {
     }
 
     return (
-        <div className={rootClasses.join(' ')}>
-            <div className={cl.customModalContent}>
-                {children}
-            </div>
+        <div 
+            className={rootClasses.join(' ')} 
+            onClick={() => setVIsible(false)}>
+                <div 
+                    className={cl.customModalContent} 
+                    onClick={(e) => e.stopPropagation()}>
+                        {children}
+                </div>
         </div>
     )
 }
