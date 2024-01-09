@@ -6,7 +6,8 @@
 
 #root {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .App {
@@ -22,6 +23,10 @@
     align-items: center;
 
     border: 2px solid lightcoral;
+}
+
+.post__btns {
+    display: flex;
 }
 
 .post__content__name {
@@ -60,4 +65,17 @@
 .page__current {
     border: 2px solid teal;
     font-weight: bold;
+}
+
+.navbar {
+    height: 50px;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    background: lightsalmon;
+}
+
+.navbar__links {
+    margin-left: auto;
 }
