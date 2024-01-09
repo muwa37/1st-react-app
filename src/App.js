@@ -1,4 +1,4 @@
-import React, {useMemo, useState } from "react";
+import React, {useEffect, useMemo, useState } from "react";
 // import Counter from "./components/Counter";
 // import ClassCounter from "./components/ClassCounter";
 import PostList from "./components/PostList";
@@ -8,6 +8,10 @@ import PostFilter from "./components/PostFilter";
 import CustomModal from "./components/UI/modal/CustomModal";
 import CustomBtn from "./components/UI/button/CustomBtn";
 import { usePosts } from "./hooks/usePosts";
+import axios from "axios";
+import PostService from "./API/PostService";
+import CustomLoader from "./components/UI/loader/CustomLoader";
+import { useFetching } from "./hooks/useFetching";
 
 
 function App() {
@@ -20,10 +24,20 @@ function App() {
 
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
+  const [fetchPosts, isPostsLoading, postError] = useFetching( async() => {
+    const posts = await PostService.getAll();
+    setPosts(posts);
+  })
+
+  useEffect(() => {
+    fetchPosts()
+  }, []);
+  
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
     setModal(false);
   }
+
 
   const removePost = (post) => {
     setPosts(posts.filter(p => p.id !== post.id))
@@ -44,7 +58,15 @@ function App() {
 
       <PostFilter filter={filter} setFilter={setFilter}/>
 
-      <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Post List 1' />
+      {postError &&
+        <h1>eroor ${postError}</h1>
+      }
+
+      {isPostsLoading
+        ? <div style={{display: 'flex', justifyContent: 'center', marginTop: 50}}> <CustomLoader/> </div>
+        :
+        <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Post List 1' />
+      }
     </div>
   );
 }
