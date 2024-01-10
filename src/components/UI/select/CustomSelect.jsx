@@ -1,8 +1,12 @@
 import React from "react";
+import cl from './CustomSelect.module.css'
+
 
 const CustomSelect = ({options, defaultValue, value, onChange}) => {
+
+
     return (
-        <select 
+        <select className={cl.customSelect}
             value={value}
             onChange={event => onChange(event.target.value)}
         

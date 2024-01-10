@@ -1,5 +1,6 @@
 import React from "react";
 import cl from './CustomModal.module.css'
+
 const CustomModal = ({children, visible, setVIsible}) => {
 
     const rootClasses = [cl.customModal]

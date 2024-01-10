@@ -18,8 +18,8 @@ const CustomNavbar = () => {
                 log out
             </CustomBtn>
             <div className="navbar__links">
-                <Link to="/about">about</Link>
-                <Link to="/posts">posts</Link>
+                <Link className="navbar__link" to="/about">about</Link>
+                <Link className="navbar__link" to="/posts">posts</Link>
             </div>
         </div>
 

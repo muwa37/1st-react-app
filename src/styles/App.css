@@ -79,3 +79,10 @@
 .navbar__links {
     margin-left: auto;
 }
+
+.navbar__link {
+    text-decoration: none;
+    margin-left: 15px;
+    color: lightcoral;
+    font-size: 15px;
+}
