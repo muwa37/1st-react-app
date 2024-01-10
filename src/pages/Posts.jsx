@@ -77,7 +77,7 @@ function Posts() {
       {isPostsLoading
         ? <div style={{display: 'flex', justifyContent: 'center', marginTop: 50}}> <CustomLoader/> </div>
         :
-        <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Post List 1' />
+        <PostList remove={removePost} posts={sortedAndSearchedPosts} title='post list 1' />
       }
       <Pagination 
         page={page} 
